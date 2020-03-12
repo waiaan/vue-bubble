@@ -21,8 +21,9 @@
 </template>
 
 <script>
-import Bubble from '@/components/bubble.vue'
-import BubbleItem from '@/components/bubble-item.vue'
+// import Bubble from '@/components/bubble.vue'
+// import BubbleItem from '@/components/bubble-item.vue'
+import { Bubble, BubbleItem } from 'vue-text-bubble'
 
 export default {
   name: 'App',
