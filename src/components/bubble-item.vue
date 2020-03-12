@@ -16,7 +16,8 @@ export default {
       },
       opacity: {
         value: 1,
-        od: -1
+        od: -1,
+        rate: 0.002
       },
       fireOpt: {
         xd: 1,
@@ -104,6 +105,17 @@ export default {
     },
     move () {
       this.setTranslate('move');
+      if (this.$parent.opacity) {
+        let value = this.opacity.value + this.opacity.od * this.opacity.rate
+        if (value > 1) {
+          value = 1;
+          this.opacity.od = -1;
+        } else if (value < 0.5) {
+          value = 0.5;
+          this.opacity.od = 1;
+        }
+        this.opacity.value = value
+      }
     },
     setTranslate (type) {
       const { xd, yd, speed } = this[type + 'Opt'];

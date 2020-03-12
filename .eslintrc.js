@@ -16,6 +16,7 @@ module.exports = {
     'vue/no-unused-components': 'warn',
     'semi': 'off',
     'no-unused-vars': 'warn',
-    'prefer-const': 'warn'
+    'prefer-const': 'warn',
+    'no-console': 'warn'
   }
 }

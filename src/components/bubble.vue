@@ -41,6 +41,7 @@ export default {
       viewNumber,
       perNumber,
       startPosition,
+      opacity,
       fire: {
         ...fire,
         lastXd: 1,
