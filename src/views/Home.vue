@@ -51,18 +51,18 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.long();
-      let index = 0;
-      setInterval(() => {
-        if (index % 2 === 0) {
-          this.long();
-        } else {
-          this.short();
-        }
-        index++;
-      }, 15000)
-    }, 2000)
+    // setTimeout(() => {
+    //   this.long();
+    //   let index = 0;
+    //   setInterval(() => {
+    //     if (index % 2 === 0) {
+    //       this.long();
+    //     } else {
+    //       this.short();
+    //     }
+    //     index++;
+    //   }, 15000)
+    // }, 2000)
   },
   methods: {
     long () {

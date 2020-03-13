@@ -45,7 +45,8 @@ export default {
       fire: {
         ...fire,
         lastXd: 1,
-        lastYd: 1
+        lastYd: 1,
+        count: 0
       },
       move: {
         ...move,
@@ -54,10 +55,11 @@ export default {
       },
       switch: {
         ...switchOpt,
-        isSwitching: false
+        stop: false
       },
       hide: {
-        speed: 1
+        speed: 1,
+        count: 0
       },
       timer: {
         move: null,
@@ -95,16 +97,25 @@ export default {
       }
       this.move.startIndex = moveStartIndex
       this.items = [].concat(items);
-      if (this.move.count < this.viewNumber && this.items.length > this.move.count) {
-        this.switchItems('fire', this.move.startIndex + this.move.count, Math.min(this.viewNumber - this.move.count, this.items.length - this.move.count))
+      const mayMoveCount = this.move.count + this.fire.count;
+      if (mayMoveCount < this.viewNumber && this.items.length > mayMoveCount) {
+        this.switchItems('fire', this.move.startIndex + mayMoveCount, Math.min(this.viewNumber - mayMoveCount, this.items.length - mayMoveCount))
       }
     },
     async switchItems (type, startIndex, count) {
+      if (this[type].count > 0) {
+        return;
+      }
+      this[type].count = count
       for (let i = 0; i < count; i++) {
         const item = this.items[startIndex + i];
         item && !item.isFiring && !item.isHiding && item[type]();
+        if (this.items.length < count || this.switch.stop) {
+          break;
+        }
         await sleep(this.fire.delay);
       }
+      this[type].count = 0
     },
     moveItems () {
       if (this.timer.move !== null) {
@@ -215,7 +226,14 @@ export default {
     }
   },
   beforeDestroy () {
-    this.clearTimer()
+    this.clearTimer();
+    this.switch.stop = true;
+  },
+  deactivated () {
+    this.switch.stop = true;
+  },
+  activated () {
+    this.switch.stop = false;
   }
 }
 </script>

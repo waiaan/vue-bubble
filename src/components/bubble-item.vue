@@ -48,6 +48,14 @@ export default {
     this.$parent.updateItems();
   },
   methods: {
+    reset () {
+      this.opacity.value = 1;
+      this.opacity.od = -1;
+      this.isMoving = false;
+      this.isFiring = false;
+      this.isHiding = false;
+      this.initPosition();
+    },
     initPosition () {
       if (this.$parent.startPosition === 'bottom') {
         this.translate.x = this.$parent.$el.offsetWidth / 2 - this.$el.offsetWidth / 2;
@@ -99,7 +107,7 @@ export default {
           clearInterval(this.timer.hide);
           this.timer.hide = null;
           this.isHiding = false;
-          this.initPosition();
+          this.reset();
         }
       }, 10)
     },
