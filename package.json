@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "author": "waiaan",
+  "main": "dist/vue-text-bubble.common.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/waiaan/vue-bubble.git"

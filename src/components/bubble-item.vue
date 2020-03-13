@@ -44,11 +44,11 @@ export default {
     }
   },
   mounted () {
-    this.init()
+    this.initPosition()
     this.$parent.updateItems();
   },
   methods: {
-    init () {
+    initPosition () {
       if (this.$parent.startPosition === 'bottom') {
         this.translate.x = this.$parent.$el.offsetWidth / 2 - this.$el.offsetWidth / 2;
         this.translate.y = this.$parent.$el.offsetHeight;
@@ -99,7 +99,7 @@ export default {
           clearInterval(this.timer.hide);
           this.timer.hide = null;
           this.isHiding = false;
-          this.init();
+          this.initPosition();
         }
       }, 10)
     },
