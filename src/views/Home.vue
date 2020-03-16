@@ -36,11 +36,11 @@ export default {
         perNumber: 3,
         opacity: true,
         fire: {
-          delay: 1000,
-          speed: 0.5
+          delay: 1500,
+          speed: 0.7
         },
         switchOpt: {
-          interval: 8000
+          interval: 15000
         },
         startPosition: 'leftBottom',
         move: {
@@ -63,8 +63,19 @@ export default {
     //     index++;
     //   }, 15000)
     // }, 2000)
+    this.fetchData()
+    setInterval(() => {
+      this.fetchData()
+    }, 2000)
   },
   methods: {
+    fetchData () {
+      window.fetch('http://172.18.150.234:10012/queryCheckAccess').then((res) => {
+        return res.json();
+      }).then((res) => {
+        this.list = [].concat(res.data)
+      })
+    },
     long () {
       this.list = new Array(12).fill({ accessPlace: '中央', accessTime: '2021-06' });
     },
@@ -84,9 +95,10 @@ export default {
 <style>
 .home {
   width: 500px;
-  height: 300px;
+  height: 400px;
   margin: 0 auto;
   background-color: #000d50;
+  font-size: 2rem;
 }
 
 .bubble-item {

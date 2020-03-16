@@ -71,14 +71,14 @@ export default {
     this.moveItems()
     this.startSwitch()
   },
-  // watch: {
-  //   'move.count': {
-  //     handler (val) {
-  //       console.log(val);
-  //     },
-  //     deep: true
-  //   }
-  // },
+  watch: {
+    // 'move.count': {
+    //   handler (val) {
+    //     console.log(val);
+    //   },
+    //   deep: true
+    // }
+  },
   methods: {
     updateItems () {
       const items = [];
@@ -108,11 +108,18 @@ export default {
       }
       this[type].count = count
       for (let i = 0; i < count; i++) {
-        const item = this.items[startIndex + i];
-        item && !item.isFiring && !item.isHiding && item[type]();
         if (this.items.length < count || this.switch.stop) {
           break;
         }
+        const item = this.items[startIndex + i];
+        if ((!item) || (type === 'fire' && item.isFiring) || (type === 'hide' && item.isHiding)) {
+          continue;
+        }
+        // item && !item.isFiring && !item.isHiding && item[type]();
+        if (item && ((type === 'fire' && item.isHiding) || (type === 'hide' && item.isFiring))) {
+          item.reset();
+        }
+        item[type]();
         await sleep(this.fire.delay);
       }
       this[type].count = 0
@@ -160,12 +167,12 @@ export default {
       const { count: moveCount, startIndex: moveStartIndex } = this.move;
       if (moveCount === 0) {
         return {
-          count: Math.min(this.viewNumber, this.items.length),
+          count: Math.min(this.viewNumber, length),
           fireStartIndex: 0
         }
       }
       let fireStartIndex = moveStartIndex + moveCount;
-      if (moveCount < this.viewNumber && this.items.length >= this.viewNumber) {
+      if (moveCount < this.viewNumber && length >= this.viewNumber) {
         return {
           count: this.viewNumber - moveCount,
           fireStartIndex

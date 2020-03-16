@@ -49,9 +49,13 @@ export default {
   },
   methods: {
     reset () {
+      this.clearTimer();
       this.opacity.value = 1;
       this.opacity.od = -1;
-      this.isMoving = false;
+      if (this.isMoving) {
+        this.$parent.move.count--;
+        this.isMoving = false;
+      }
       this.isFiring = false;
       this.isHiding = false;
       this.initPosition();
