@@ -32,6 +32,7 @@ export default {
   data () {
     return {
       options: {
+        // perspective: 600,
         viewNumber: 5,
         perNumber: 3,
         opacity: true,

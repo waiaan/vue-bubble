@@ -1,5 +1,5 @@
 <template>
-  <div class="bubble-container">
+  <div class="bubble-container" :style="{perspective:`${perspective}px`}">
     <slot></slot>
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
   },
   data () {
     const {
+      perspective = 0,
       viewNumber = 5,
       perNumber = 3,
       opacity = false,
@@ -38,6 +39,7 @@ export default {
     }
     return {
       items: [],
+      perspective,
       viewNumber,
       perNumber,
       startPosition,
@@ -69,7 +71,7 @@ export default {
   },
   mounted () {
     this.moveItems()
-    this.startSwitch()
+    // this.startSwitch()
   },
   watch: {
     // 'move.count': {
@@ -250,5 +252,6 @@ export default {
   height: 100%;
   position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
 }
 </style>

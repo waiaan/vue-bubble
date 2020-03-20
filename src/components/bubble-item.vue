@@ -1,5 +1,5 @@
 <template>
-  <div class="bubble-item" :class="[isMoving?'bubble-item-move':'',isFiring?'bubble-item-fire':'',isHiding?'bubble-item-hide':'']" :style="{transform:`translate(${translate.x}px,${translate.y}px)`,opacity:opacity.value}">
+  <div class="bubble-item" :class="[isMoving?'bubble-item-move':'',isFiring?'bubble-item-fire':'',isHiding?'bubble-item-hide':'']" :style="{transform:`translate3D(${translate.x}px,${translate.y}px,${translate.z}px)`,opacity:opacity.value}">
     <slot></slot>
   </div>
 </template>
@@ -12,7 +12,8 @@ export default {
     return {
       translate: {
         x: 0,
-        y: 0
+        y: 0,
+        z: 0
       },
       opacity: {
         value: 1,
@@ -27,6 +28,7 @@ export default {
       moveOpt: {
         xd: 1,
         yd: 1,
+        zd: -1,
         speed: this.$parent.move.speed
       },
       hideOpt: {
@@ -125,6 +127,18 @@ export default {
         } else if (value < 0.5) {
           value = 0.5;
           this.opacity.od = 1;
+        }
+        if (this.$parent.perspective > 0) {
+          const { speed, zd } = this.moveOpt;
+          let z = this.translate.z;
+          z += zd * speed
+          if (z <= -1 * this.$parent.perspective) {
+            this.moveOpt.zd = 1
+          }
+          if (z >= 0) {
+            this.moveOpt.zd = -1
+          }
+          this.translate.z = z;
         }
         this.opacity.value = value
       }
